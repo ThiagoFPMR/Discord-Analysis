@@ -1,21 +1,34 @@
 import discord
 import logging
 import pandas as pd
-import numpy as np
 
 logging.basicConfig(level=logging.INFO)
 
 client = discord.Client()
-#guild. discord.Guild
+guild = discord.Guild
 
 @client.event
 async def on_ready():
-    guild = client.get_guild(532982579733856286)
-
     print('We have logged in as {0.user}'.format(client))
-    async for message in guild.text_channels[0].history():
-        print(message.content)
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+    elif message.content.startswith('_'):
+
+        cmd = message.content.split()[0].replace("_","")
+        if len(message.content.split()) > 1:
+            parameters = message.content.split()[1:]
+
+        # Bot Commands
+
+        if cmd == 'scan':
+            data = pd.DataFrame(columns = ['content', 'time', 'author'])
+
+        # history is a channel property, so we'll need the channel as an argument
+        # if the command user does not inform the channel, use the message.channel atribute
 
     
 
-client.run('NjAxNTM0NDgyOTczMDY1MjM4.XlrJkA.xoJ1VTbC4GkM8-lUE0kd832k6v0')
+client.run('NjAxNTM0NDgyOTczMDY1MjM4.XTDspA.o8F_hfWn2lkfAGYN-m9KeZ1czFs')
