@@ -40,8 +40,6 @@ async def on_message(message):
                         limit = int(parameter)
             else:
                 limit = 100
-
-            print(limit)
             
             # Creating and filling the dataset with message history data
             count = 0;
@@ -54,6 +52,7 @@ async def on_message(message):
                     count += 1
             
             data.to_csv('data/msg_hist.csv')
+            print("Dataframe created and filled")
 
     
 
