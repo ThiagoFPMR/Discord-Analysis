@@ -24,10 +24,30 @@ async def on_message(message):
         # Bot Commands
 
         if cmd == 'scan':
-            data = pd.DataFrame(columns = ['content', 'time', 'author'])
 
-        # history is a channel property, so we'll need the channel as an argument
-        # if the command user does not inform the channel, use the message.channel atribute
+            data = pd.DataFrame(columns=['content', 'time', 'author'])
+
+            if len(message.content.split()) > 1:
+                channel = message.channel_mentions[0]
+            else:
+                channel = message.channel
+            if len(message.content.split()) > 2:
+                limit = int(parameters[1])
+            else:
+                limit = 100
+
+            print(limit)
+            
+            count = 0;
+            async for msg in channel.history(limit=limit):
+                if msg.author != client.user:
+                    data = data.append({'content': msg.content,
+                                        'time': msg.created_at,
+                                        'author': msg.author.name}, ignore_index=True)
+                    print(f"Added row {count} to dataframe")
+                    count += 1
+            
+            data.to_csv('data/msg_hist.csv')
 
     
 
