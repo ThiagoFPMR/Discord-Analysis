@@ -27,12 +27,17 @@ async def on_message(message):
 
             data = pd.DataFrame(columns=['content', 'time', 'author'])
 
-            if len(message.content.split()) > 1:
+            # Acquiring the channel via the bot command
+            if len(message.channel_mentions) > 0:
                 channel = message.channel_mentions[0]
             else:
                 channel = message.channel
-            if len(message.content.split()) > 2:
-                limit = int(parameters[1])
+
+            # Aquiring the number of messages to be scraped via the bot command
+            if (len(message.content.split()) > 1 and len(message.channel_mentions) == 0) or len(message.content.split()) > 2:
+                for parameter in parameters:
+                    if parameter[0] != "<": # Channels are enveloped by "<>" as strings
+                        limit = int(parameter)
             else:
                 limit = 100
 
