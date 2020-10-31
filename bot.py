@@ -35,14 +35,15 @@ async def on_message(message):
 
             # Aquiring the number of messages to be scraped via the bot command
             if (len(message.content.split()) > 1 and len(message.channel_mentions) == 0) or len(message.content.split()) > 2:
-                for parameter in parameters:
-                    if parameter[0] != "<": # Channels are enveloped by "<>" as strings
+                for parameter in parameters: # Using a for as to make it so the order of the parameters given doesn't matter
+                    if parameter[0] != "<": # Channels are enveloped by "<>" when represented as strings
                         limit = int(parameter)
             else:
                 limit = 100
 
             print(limit)
             
+            # Creating and filling the dataset with message history data
             count = 0;
             async for msg in channel.history(limit=limit):
                 if msg.author != client.user:
