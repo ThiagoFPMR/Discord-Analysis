@@ -42,7 +42,7 @@ async def on_message(message):
                 limit = 100
             
             # Creating and filling the dataset with message history data
-            count = 0;
+            count = 0
             async for msg in channel.history(limit=limit):
                 if msg.author != client.user:
                     data = data.append({'content': msg.content,
